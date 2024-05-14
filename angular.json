@@ -25,6 +25,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []
@@ -87,12 +89,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/angular-calendar/css/angular-calendar.css",
+              "src/styles.css",
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5e49ca17-f1b4-4fc9-9be9-b4bdf26e1d70"
   }
 }

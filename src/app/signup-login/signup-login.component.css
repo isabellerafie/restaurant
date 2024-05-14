@@ -1,0 +1,187 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: linear-gradient(90deg, #F4F4F4 0%, #D8D8D8 30%, #B3B3B3 50%, #878787 70%, #4A4A4A 100%);
+  background-size: cover;
+  font-family: Arial, sans-serif;
+}
+
+#overlay {
+  background-image: url("/assets/pngtree-original-hand-painted-gradient-dark-blue-watercolor-background-design-dream-picture-image_1658115\ \(1\).jpg");
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  width: 600px; 
+  height: 650px; 
+  z-index: 2; /* Ensure the overlay is on top of the signup form */
+  border-radius: 25px;
+}
+
+.container {
+  display: flex;
+  height: 100vh; 
+  margin: 0;
+  align-items: center;
+  position: relative;
+  overflow: hidden; 
+}
+
+.signup-form,
+.login-form {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.219);
+  border-radius: 25px;
+  margin: 10px;
+}
+
+.form-group {
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 15px;  
+  color: dodgerblue;
+  font-size: large;
+}
+
+.form-group label {
+  width: 150px; 
+  margin-bottom: 5px; 
+  
+}
+
+.phone-inputs {
+  display: flex;
+  flex: 1; 
+}
+
+.phone-inputs select {
+  width: calc(25% - 5px); 
+}
+
+.form-group select {
+width: calc(25% - 5px); 
+background-color: transparent;
+border-color: dodgerblue;
+border-style: dotted;
+margin-top: 10px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"]
+{
+  width: calc(90% - 90px); 
+  margin-top: 5px;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border: 2px solid dodgerblue;
+  flex: 1; 
+}
+
+
+.form-group input[type="file"]{
+  color: red;
+}
+
+
+.form-group .radio-group {
+  display: flex;
+}
+
+.form-group .radio-group label {
+  margin-right: 10px;
+}
+
+.button-container {
+  text-align: center;
+}
+
+button {
+  padding: 10px 40px;
+  background-color: #d4a930;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 250px;
+
+}
+
+button:hover {
+  background-color: #fdba01;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  color: #157fbe;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+
+.signup-form {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+}
+
+.login-form {
+  position: absolute;
+  right: 5%; 
+  width: 600px;
+}
+
+span{
+color: red;
+}
+
+.error-message {
+color: red;
+font-size: 14px;
+margin-top: 5px;
+}
+
+/* Style the invalid inputs */
+input:invalid {
+border-color: red;
+box-shadow: 0 0 3px red;
+}
+
+/* Style the valid inputs */
+input:valid {
+border-color: green;
+}
+
+.preview-image {
+  max-width: 100px; 
+
+  max-height: 100px; 
+}

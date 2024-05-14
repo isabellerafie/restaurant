@@ -1,0 +1,31 @@
+.calendar-container {
+  text-align: center;
+  color: #3f51b5;
+  background-color: #d3cccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #d3d3cc; /* Light gray background */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd; /* Light gray border */
+}
+
+th {
+  background-color: #3f51b5; /* Dark blue header */
+  font-weight: bold;
+  color: #fff; /* White text for header */
+}
+
+td {
+  color: #0d606e;
+}
+

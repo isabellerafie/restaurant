@@ -1,0 +1,54 @@
+<!-- reservation-calendar.component.html -->
+<div class="calendar-container">
+  <p-calendar [(ngModel)]="selectedDate" [inline]="true" [showButtonBar]="true" (onSelect)="onDateSelect($event)"></p-calendar>
+</div>
+
+<div *ngIf="selectedDate && showTableReservation">
+  <h3 style="text-align: center; background-color:rgb(192, 178, 178) ; color: rgb(21, 21, 158);">Reservations for {{ selectedDate | date }}</h3>
+  <!-- Display reservation details in a table -->
+  <table>
+      <thead>
+          <tr>
+              <th>Organization</th>
+              <th>Quantity</th>
+              <th>Type</th>
+              <th>Time of Pickup</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Loop through reservation data and display in rows -->
+          <tr *ngFor="let reservation of reservations">
+              <td>{{ reservation.organization }}</td>
+              <td>{{ reservation.quantity }}</td>
+              <td>{{ reservation.type }}</td>
+              <td>{{ reservation.pickupTime }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!-- Table for all leftovers -->
+<div class="leftovers-table">
+  <h3 style="text-align: center; background-color:rgb(192, 178, 178) ; color: rgb(21, 21, 158);">All Reservations</h3>
+  <table>
+      <thead>
+          <tr>
+              <th>Organization</th>
+              <th>Quantity</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Time of Pickup</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Loop through all leftovers and display in rows -->
+          <tr *ngFor="let leftover of leftovers">
+              <td>{{ leftover.organization }}</td>
+              <td>{{ leftover.quantity }}</td>
+              <td>{{ leftover.type }}</td>
+              <td>{{ leftover.date | date }}</td>
+              <td>{{ leftover.pickupTime }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
