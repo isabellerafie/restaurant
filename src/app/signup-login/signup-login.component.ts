@@ -4,6 +4,7 @@ import { compareValidator } from '../compare.validator';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { AuthService } from '../auth.service';
+import { CountryServiceService } from '../service/country-service.service';
 
 @Component({
   selector: 'app-signup-login',
@@ -25,12 +26,14 @@ export class SignupLoginComponent {
   logoSrc: string | ArrayBuffer | null = null; 
   licenseFile: File | null = null;
   logoFile: File | null = null;
+  public countries: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private countryService: CountryServiceService
   ) {    
     this.signUpForm = this.formBuilder.group({
       password: ['', Validators.required],
@@ -67,7 +70,11 @@ export class SignupLoginComponent {
       if (params['reset']) {
         this.showResetPasswordForm();
       }});
-  }
+      this.countryService.getCountries().subscribe(countries => {
+        this.countries = countries;
+      });
+    }
+
 
   showLoginForm() {
     this.isSignUpVisible = false;
@@ -158,7 +165,7 @@ console.log('FormData:', formData);
           response => {
             console.log('Registration successful:', response);
             // Handle successful registration response (e.g., show success message)
-            alert('Registration successful');
+            alert('Registration successful. We will send you an email after reviewing your request!');
             //show login
             this.showLoginForm();
           },

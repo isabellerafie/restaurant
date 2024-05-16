@@ -4,7 +4,7 @@ body, html {
 }
 
 body {
-  background-image: linear-gradient(90deg, #F4F4F4 0%, #D8D8D8 30%, #B3B3B3 50%, #878787 70%, #4A4A4A 100%);
+  /* background-image: linear-gradient(90deg, #F4F4F4 0%, #D8D8D8 30%, #B3B3B3 50%, #878787 70%, #4A4A4A 100%); */
   background-size: cover;
   font-family: Arial, sans-serif;
 }
@@ -16,20 +16,19 @@ body {
   top: 50%;
   left: 70%;
   transform: translate(-50%, -50%);
-  width: 600px; 
-  height: 650px; 
+  width: 40%; 
+  height: 100%; 
   z-index: 2; /* Ensure the overlay is on top of the signup form */
   border-radius: 25px;
 }
 
 .container {
   display: flex;
-  height: 100vh; 
+  min-height: 100vh; 
   margin: 0;
   align-items: center;
   position: relative;
   overflow: hidden; 
-  width: 100%;
 }
 
 .signup-form,
@@ -178,10 +177,11 @@ color: red;
 .error-message {
 color: red;
 font-size:x-small;
-margin-top: 5px;
+margin-top: 3px;
+margin-left: 150px;
 }
 
-/* Style the invalid inputs */
+/*  Style the invalid inputs */
 input:invalid {
 border-color: red;
 box-shadow: 0 0 3px red;
@@ -192,5 +192,25 @@ box-shadow: 0 0 3px red;
 .preview-image {
   max-width: 100px; 
   max-height: 100px; 
+}
+
+/* Style for the country dropdown */
+select.form-control {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+select.form-control option {
+  display: flex;
+  align-items: center;
+}
+
+select#phone-code {
+  width: 50%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
 }
 

@@ -1,8 +1,10 @@
 // view-leftovers.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { StatusLabels, StatusColors } from '../status';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { StatusLabels, StatusColors } from '../status';
 
 @Component({
   selector: 'app-view-leftovers',
@@ -10,66 +12,98 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-leftovers.component.css']
 })
 export class ViewLeftoversComponent implements OnInit {
-  leftovers: any[] = []; // Mock array of leftover items
-  sortOrder: string = 'asc'; // Property to track sorting order
+  leftovers: any[] = [];
+  sortOrder: string = 'asc';
+  sessionData: any;
+ 
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-    // Fetch leftover data from backend
-    this.fetchLeftovers();
+    this.fetchSessionData();
   }
 
-  fetchLeftovers() {
-    // Mock data for demonstration purposes
-    this.leftovers = [
-      { image: 'path/to/image1.jpg', type: 'Pasta', name: 'Leftover a', quantity: 5, date: new Date('2024-05-15'), status: 1 },
-      { image: 'path/to/image2.jpg', type: 'Pizza', name: 'Leftover b', quantity: 3, date: new Date('2024-04-20'), status: 3 },
-      { image: 'path/to/image3.jpg', type: 'Chicken Meal', name: 'Leftover c', quantity: 2, date: new Date('2024-06-10'), status: 3 },
-      { image: 'path/to/image4.jpg', type: 'Dessert', name: 'Leftover d', quantity: 5, date: new Date('2024-04-25'), status: 1 },
-      { image: 'path/to/image5.jpg', type: 'Sandwiches', name: 'Leftover e', quantity: 3, date: new Date('2024-05-01'), status: 1 },
-      { image: 'path/to/image6.jpg', type: 'Dessert', name: 'Leftover f', quantity: 2, date: new Date('2024-06-15'), status: 3 },
-      { image: 'path/to/image7.jpg', type: 'Sandwiches', name: 'Leftover g', quantity: 5, date: new Date('2024-05-20'), status: 1 },
-      { image: 'path/to/image8.jpg', type: 'Pizza', name: 'Leftover h', quantity: 3, date: new Date('2024-04-30'), status: 1 },
-      { image: 'path/to/image9.jpg', type: 'Beef Meal', name: 'Leftover i', quantity: 2, date: new Date('2024-05-05'), status: 3 },
-      { image: 'path/to/image10.jpg', type: 'Beef Meal', name: 'Leftover j', quantity: 5, date: new Date('2024-06-01'), status: 1 }
-    ];
+  fetchSessionData(): void {
+    new BehaviorSubject(sessionStorage.getItem("sessionData") ?? '{}').subscribe(
+      (data) => {
+        this.sessionData = JSON.parse(data);
+        const accountId = this.sessionData.session?.user?.account_id;
+        if (accountId) {
+          this.fetchLeftovers(accountId);
+        } else {
+          console.error('No account ID found in session data.');
+        }
+      }
+    );
+  }
 
-    // Sort leftovers by default (ascending order of expiry date)
-  this.sortLeftovers('asc');
-}
-navigateToAddLeftover() {
-  this.router.navigate(['/add-leftover']);
-}
-getStatusLabel(status: number): string {
-  return StatusLabels[status as keyof typeof StatusLabels]; // Add type assertion
-}
+  fetchLeftovers(accountId: string): void {
+    this.http.get<any[]>(`http://localhost:3000/leftovers/restaurant/${accountId}`).subscribe(
+      (data) => {
+        this.leftovers = data;
+        this.sortLeftovers(this.sortOrder);
+      },
+      (error) => {
+        console.error('Error fetching leftovers:', error);
+      }
+    );
+  }
 
-getStatusColor(status: number): string {
-  return StatusColors[status as keyof typeof StatusColors]; // Add type assertion
-}
+  navigateToAddLeftover() {
+    this.router.navigate(['/add-leftover']);
+  }
+
+  getStatusLabel(status: number): string {
+    return StatusLabels[status as keyof typeof StatusLabels];
+  }
+
+  getStatusColor(status: number): string {
+    return StatusColors[status as keyof typeof StatusColors];
+  }
 
   editLeftover(leftover: any) {
-    // Navigate to the add leftover component with the leftover data as a parameter
     this.router.navigate(['/add-leftover', { leftover: JSON.stringify(leftover) }]);
   }
 
   deleteLeftover(leftover: any) {
-    // Implement delete leftover functionality
-    console.log('Delete leftover:', leftover);
+    const leftoverId = leftover.leftover_id;
+    this.http.delete(`http://localhost:3000/leftovers/${leftoverId}`).subscribe(
+      (response) => {
+        console.log('Delete response:', response);
+        // Remove the deleted leftover from the list
+        this.leftovers = this.leftovers.filter(item => item.leftover_id !== leftoverId);
+      },
+      (error) => {
+        console.error('Error deleting leftover:', error);
+        if (error.error && error.error.message) {
+          // Display the error message received from the backend to the user
+          alert(error.error.message);
+        } else {
+          // Handle other error cases
+          // You can display a generic error message or handle the error in other ways
+          console.error('An error occurred while deleting the leftover:', error);
+          // Display a generic error message to the user
+          alert('An error occurred while deleting the leftover. Please try again later.');
+        }
+      }
+    );
   }
+  
 
   sortLeftovers(order: string) {
-    // Sort leftovers by expiry date
     if (order === 'asc') {
-      this.leftovers.sort((a, b) => a.date.getTime() - b.date.getTime());
+      this.leftovers.sort((a, b) => new Date(a.expiry_date_formatted).getTime() - new Date(b.expiry_date_formatted).getTime());
     } else if (order === 'desc') {
-      this.leftovers.sort((a, b) => b.date.getTime() - a.date.getTime());
+      this.leftovers.sort((a, b) => new Date(b.expiry_date_formatted).getTime() - new Date(a.expiry_date_formatted).getTime());
     }
   }
+  
 
   toggleSortOrder() {
-    // Toggle sorting order between ascending and descending
     if (this.sortOrder === 'asc') {
       this.sortLeftovers('desc');
       this.sortOrder = 'desc';

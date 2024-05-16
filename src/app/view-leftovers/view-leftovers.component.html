@@ -1,33 +1,32 @@
 <!-- view-leftovers.component.html -->
 <div class="view-leftovers-container">
-  <div class="view-leftovers-wrapper">
+    <div class="view-leftovers-wrapper">
       <h2>View Leftovers</h2> 
-  </div>
-  <table>
+    </div>
+    <table>
       <thead>
-          <tr>
-              <th>Image</th>
-              <th>Type</th>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Expiry Date <button class="sort-button" (click)="toggleSortOrder()">▲▼</button></th>
-              <th>Status</th>
-              <th>Edit Leftover</th>
-              <th>Delete Leftover</th>
-          </tr>
+        <tr>
+          <th>Image</th>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Expiry Date <button class="sort-button" (click)="toggleSortOrder()">▲▼</button></th>
+          <th>Status</th>
+          <th>Edit Leftover</th>
+          <th>Delete Leftover</th>
+        </tr>
       </thead>
       <tbody>
-          <!-- Loop through leftover items and display them in rows -->
-          <tr *ngFor="let leftover of leftovers" [ngStyle]="{ 'background-color': getStatusColor(leftover.status) }">
-              <td><img [src]="leftover.image" alt="Leftover Image"></td>
-              <td>{{ leftover.type }}</td>
-              <td>{{ leftover.name }}</td>
-              <td>{{ leftover.quantity }}</td>
-              <td>{{ leftover.date | date: 'MM/dd/yyyy' }}</td>
-              <td>{{ getStatusLabel(leftover.status) }}</td>
-              <td><button class="edit" (click)="editLeftover(leftover)">Edit</button></td>
-              <td><button class="delete" (click)="deleteLeftover(leftover)">Delete</button></td>
-          </tr>
+        <tr *ngFor="let leftover of leftovers" [ngStyle]="{ 'background-color': getStatusColor(leftover.status) }">
+          <td><img [src]="'/assets/'+leftover.leftover_image_path" alt="Leftover Image" height="100px" width="100px" style="border-radius: 15px;"></td>
+          <td>{{ leftover.type }}</td>
+          <td>{{ leftover.name }}</td>
+          <td>{{ leftover.quantity }}</td>
+          <td>{{ leftover.expiry_date_formatted | date: 'MM/dd/yyyy' }}</td>
+          <td>{{ getStatusLabel(leftover.status) }}</td>
+          <td><button class="edit" (click)="editLeftover(leftover)">Edit</button></td>
+          <td><button class="delete" (click)="deleteLeftover(leftover)">Delete</button></td>
+        </tr>
       </tbody>
-  </table>
-</div>
+    </table>
+  </div>

@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SignupLoginComponent } from './signup-login/signup-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { CountryServiceService } from './service/country-service.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
     NgForOf,
     CalendarModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, CountryServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
