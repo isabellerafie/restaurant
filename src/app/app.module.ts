@@ -10,12 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import {CalendarModule} from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
-import { CommonModule } from '@angular/common'; // Import CommonModule here
+import { CommonModule } from '@angular/common'; 
 import { DatePipe } from '@angular/common';
 import { AddLeftoverComponent } from './add-leftover/add-leftover.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SignupLoginComponent } from './signup-login/signup-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReservationCalendarComponent,
     AddLeftoverComponent,
     ProfileComponent,
-    SignupLoginComponent
+    SignupLoginComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,

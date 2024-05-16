@@ -29,15 +29,27 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden; 
+  width: 100%;
 }
 
 .signup-form,
-.login-form {
+.login-form 
+.forgot-password-form {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.219);
   border-radius: 25px;
   margin: 10px;
 }
+
+.forgot-password-form {
+  position: absolute;
+  right: 5%; 
+  top: 50%; 
+  transform: translateY(-50%);
+  width: 600px;
+  z-index: 3; 
+}
+
 
 .form-group {
   display: flex; 
@@ -165,7 +177,7 @@ color: red;
 
 .error-message {
 color: red;
-font-size: 14px;
+font-size:x-small;
 margin-top: 5px;
 }
 
@@ -175,13 +187,10 @@ border-color: red;
 box-shadow: 0 0 3px red;
 }
 
-/* Style the valid inputs */
-input:valid {
-border-color: green;
-}
+
 
 .preview-image {
   max-width: 100px; 
-
   max-height: 100px; 
 }
+

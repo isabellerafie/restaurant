@@ -6,40 +6,72 @@
       <p>Total leftovers donated: {{ totalLeftovers }}</p>
     </div>
     <div class="right-container">
-      <h3>Profile Details</h3>
-      <table>
-        <tr>
-          <td>Name :</td>
-          <td>{{ restaurantName }}</td>
-        </tr>
-        <tr>
-          <td>Email :</td>
-          <td>{{ email }}</td>
-        </tr>
-        <tr>
-          <td>Phone number :</td>
-          <td>{{ phoneCode }} {{ phoneNumber }}</td>
-        </tr>
-        <tr>
-          <td>Country :</td>
-          <td>{{ country }}</td>
-        </tr>
-        <tr>
-          <td>City :</td>
-          <td>{{ city }}</td>
-        </tr>
-        <tr>
-          <td>Postal Code :</td>
-          <td>{{ postalCode }}</td>
-        </tr>
-        <tr>
-          <td>Address :</td>
-          <td>{{ address }}</td>
-        </tr>
-      </table>
-      <div class="buttonContainer">
-        <button type="submit">Edit</button>
+      <div *ngIf="!isEditing">
+        <!-- Display profile details -->
+        <h3 style="text-align: center"><u>Profile Details:</u></h3>
+        <div>
+          <p><strong>Restaurant Name:</strong> {{ profileForm.get('restaurantName').value }}</p>
+          <p><strong>Email:</strong> {{ profileForm.get('email').value }}</p>
+          <p><strong>Phone Number:</strong> {{ profileForm.get('phoneCode').value }} {{ profileForm.get('phoneNumber').value }}</p>
+          <p><strong>Country:</strong> {{ profileForm.get('country').value }}</p>
+          <p><strong>City:</strong> {{ profileForm.get('city').value }}</p>
+          <p><strong>Postal Code:</strong> {{ profileForm.get('postalCode').value }}</p>
+          <p><strong>Address:</strong> {{ profileForm.get('address').value }}</p>
+        </div>
+        <!-- Add button to enable editing mode -->
+        <button (click)="enableEditing()" class="edit">Edit Profile</button>
       </div>
-    </div>
-  </div>
-</body>
+      
+      <div *ngIf="isEditing">
+        <div class="form-container">
+          <h2 class="form-title">Edit Profile</h2>
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <div class="form-group">
+            <label for="restaurantName">Restaurant Name:</label>
+            <input type="text" id="restaurantName" formControlName="restaurantName" required>
+            <div *ngIf="profileForm.get('restaurantName').invalid && profileForm.get('restaurantName').touched"
+              class="error-message">Restaurant name is required.</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+            <div *ngIf="profileForm.get('email').invalid && profileForm.get('email').touched"
+              class="error-message">Please enter a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone:</label>
+            <div class="phone-container">
+              <select id="phone-code" formControlName="phoneCode" required>
+                <!-- Provide options for selecting phone code -->
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <!-- Add more options as needed -->
+              </select>
+              <input type="text" id="phone-number" formControlName="phoneNumber" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="country">Country:</label>
+            <select id="country" formControlName="country" required>
+              <!-- Provide options for selecting country -->
+              <option value="USA">USA</option>
+              <option value="Canada">Canada</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" formControlName="city" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" formControlName="address" required>
+          </div>
+          <button type="submit" class="save">Save</button>
+          <button type="button" (click)="cancelEditing()" class="cancel">Cancel</button>
+        </form>
+      </div>
+      </div>
+      </div>
+      </div>
+    <div><app-view-leftovers></app-view-leftovers></div>

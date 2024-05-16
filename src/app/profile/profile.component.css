@@ -95,13 +95,124 @@ text-align: center;
 margin-top: 10px;
 }
 
-button{  
-  width: 30%; /* Make the button width 100% to fill the container */
+.edit{  
+  width: 30%; 
   color: white;
   text-align: center;
   background-color: rgb(16, 91, 202);
   border: none;
-  margin: 5px 0; /* Add some vertical margin */
+  margin-left: 160px ;
   padding: 8px;
 }
+
+/* profile.component.css */
+
+/* Form container */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Form input fields */
+.form-group {
+  display: flex; /* Use flexbox to align items horizontally */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  flex: 0 0 150px; /* Set fixed width for labels */
+  font-weight: bold;
+  margin-right: 10px; /* Add some space between label and input */
+}
+
+.form-group input {
+  flex: 1; /* Allow input fields to grow */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 5px;
+}
+
+/* profile.component.css */
+
+/* Adjustments for phone code and phone number */
+.phone-container {
+  display: flex;
+  align-items: center;
+}
+
+.phone-container select {
+  flex: 0 0 100px; /* Adjust width for phone code dropdown */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px; /* Add some space between dropdown and input */
+}
+
+.phone-container input {
+  flex: 1; /* Allow input field to grow */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form-group select {
+  width: calc(100% - 160px); /* Adjust width to match other input fields */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* Error message */
+.error-message {
+  color: #f00;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Buttons */
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   
+}
+
+.cancel {
+  width: 30%;
+  color: white;
+  text-align: center;
+  background-color: rgb(16, 91, 202);
+  border: none;
+  padding: 8px;
+  
+}
+
+.save{
+  width: 30%; 
+  color: white;
+  text-align: center;
+  background-color: rgb(16, 91, 202);
+  border: none;
+  padding: 8px;
+  margin-right: 50px;
+  margin-left: 50px;
+}
