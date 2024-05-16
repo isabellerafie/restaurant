@@ -2,7 +2,7 @@
 <body class="bodyy">
   <div class="card">
     <div class="left-container">
-      <img src="{{ restaurantLogo }}" alt="Restaurant Logo">
+      <img [src]="'/assets/'+restaurantLogo" alt="Restaurant Logo">
       <p>Total leftovers donated: {{ totalLeftovers }}</p>
     </div>
     <div class="right-container">
@@ -10,13 +10,13 @@
         <!-- Display profile details -->
         <h3 style="text-align: center"><u>Profile Details:</u></h3>
         <div>
-          <p><strong>Restaurant Name:</strong> {{ profileForm.get('restaurantName').value }}</p>
-          <p><strong>Email:</strong> {{ profileForm.get('email').value }}</p>
-          <p><strong>Phone Number:</strong> {{ profileForm.get('phoneCode').value }} {{ profileForm.get('phoneNumber').value }}</p>
-          <p><strong>Country:</strong> {{ profileForm.get('country').value }}</p>
-          <p><strong>City:</strong> {{ profileForm.get('city').value }}</p>
-          <p><strong>Postal Code:</strong> {{ profileForm.get('postalCode').value }}</p>
-          <p><strong>Address:</strong> {{ profileForm.get('address').value }}</p>
+          <p><strong>Restaurant Name:</strong> {{ profileForm.get('restaurant_username')!.value }}</p>
+          <p><strong>Email:</strong> {{ profileForm.get('restaurant_email')!.value }}</p>
+          <p><strong>Phone Number:</strong> <!--{{ profileForm.get('phoneCode')!.value }}--> {{ profileForm.get('phone')!.value }}</p>
+          <p><strong>Country:</strong> {{ profileForm.get('country')!.value }}</p>
+          <p><strong>City:</strong> {{ profileForm.get('city')!.value }}</p>
+          <p><strong>Postal Code:</strong> {{ profileForm.get('postal_code')!.value }}</p>
+          <p><strong>Address:</strong> {{ profileForm.get('address')!.value }}</p>
         </div>
         <!-- Add button to enable editing mode -->
         <button (click)="enableEditing()" class="edit">Edit Profile</button>
@@ -28,35 +28,35 @@
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
           <div class="form-group">
             <label for="restaurantName">Restaurant Name:</label>
-            <input type="text" id="restaurantName" formControlName="restaurantName" required>
-            <div *ngIf="profileForm.get('restaurantName').invalid && profileForm.get('restaurantName').touched"
+            <input type="text" id="restaurant_username" formControlName="restaurant_username" required>
+            <div *ngIf="profileForm.get('restaurant_username')!.invalid && profileForm.get('restaurant_username')!.touched"
               class="error-message">Restaurant name is required.</div>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" formControlName="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-            <div *ngIf="profileForm.get('email').invalid && profileForm.get('email').touched"
+            <input type="restaurant_email" id="restaurant_email" formControlName="restaurant_email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+            <div *ngIf="profileForm.get('restaurant_email')!.invalid && profileForm.get('restaurant_email')!.touched"
               class="error-message">Please enter a valid email address.</div>
           </div>
           <div class="form-group">
             <label for="phone">Phone:</label>
             <div class="phone-container">
-              <select id="phone-code" formControlName="phoneCode" required>
-                <!-- Provide options for selecting phone code -->
+              <!-- <select id="phone-code" formControlName="phoneCode" required>
+                 Provide options for selecting phone code
                 <option value="+1">+1 (USA)</option>
                 <option value="+44">+44 (UK)</option>
-                <!-- Add more options as needed -->
-              </select>
-              <input type="text" id="phone-number" formControlName="phoneNumber" required>
+                 Add more options as needed 
+              </select> -->
+              <input type="text" id="phone" formControlName="phone" required>
             </div>
           </div>
           <div class="form-group">
             <label for="country">Country:</label>
             <select id="country" formControlName="country" required>
-              <!-- Provide options for selecting country -->
-              <option value="USA">USA</option>
-              <option value="Canada">Canada</option>
-              <!-- Add more options as needed -->
+              <option value="" disabled selected>Select your country</option>
+                        <option *ngFor="let country of countries" [value]="country.phoneCode">
+                            {{ country.name }}
+                        </option>
             </select>
           </div>
           <div class="form-group">
@@ -67,11 +67,15 @@
             <label for="address">Address:</label>
             <input type="text" id="address" formControlName="address" required>
           </div>
+          <div class="form-group">
+            <label for="logo">Restaurant Logo:</label>
+            <input type="file" id="logo" (change)="onFileSelected($event)">
+          </div>
           <button type="submit" class="save">Save</button>
           <button type="button" (click)="cancelEditing()" class="cancel">Cancel</button>
-        </form>
-      </div>
-      </div>
-      </div>
-      </div>
-    <div><app-view-leftovers></app-view-leftovers></div>
+          </form>
+        </div>
+        </div>
+        </div>
+        </div>
+</body>
