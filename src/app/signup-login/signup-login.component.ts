@@ -41,7 +41,7 @@ export class SignupLoginComponent {
     });
     this.loginForm = this.formBuilder.group({
       user_name: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['',Validators.required]
     });
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern('^.+@.+\..+$')]]
@@ -60,7 +60,10 @@ export class SignupLoginComponent {
       postal_code: ['', Validators.required],
       address: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('[0-9]+')]], 
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$')
+      ]],
       confirmPassword: ['', [Validators.required, compareValidator('password')]],
       license_path: ['', Validators.required],
       logo_path: ['', Validators.required],
@@ -104,7 +107,6 @@ export class SignupLoginComponent {
     this.isResetPasswordVisible = true;
     this.overlayLeft = '20%';
   }
-
   onRadioChange(event: Event) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -123,11 +125,29 @@ export class SignupLoginComponent {
   }
   submitForgotPasswordForm() {
     if (this.forgotPasswordForm.valid) {
-
-      console.log('Forgot password form submitted'); // Add this line
-
+      // If the form is valid, make an HTTP POST request to the backend
+      const email = this.forgotPasswordForm.value.email; // Get the email address from the form
+      console.log(email)
+      this.http.post<any>('http://localhost:2995/forgotPassword', { email } ).subscribe(
+        (response) => {
+          // Handle success response from the backend
+          console.log('Reset password email sent successfully:', response);
+          // Optionally, display a success message to the user
+          alert("an email was sent to you to reset your password");
+          //this.router.navigate(['/resetPassword'], { queryParams: { resetToken: response.resetToken } });
+        },
+        (error) => {
+          // Handle error response from the backend
+          console.error('Error sending reset password email:', error);
+          // Optionally, display an error message to the user
+        }
+      );
+    } else {
+      console.log('Forgot password form is invalid');
+      this.markFormGroupTouched(this.forgotPasswordForm);
     }
   }
+
 
   submitResetPasswordForm() {
   if (this.resetPasswordForm.valid) {
@@ -260,6 +280,7 @@ console.log('FormData:', formData);
     return (control: any) => {
       if (!control.parent || !control) return null;
       const matchingControl = control.parent.get(controlName);
+      if (!matchingControl) return null;
       if (matchingControl.value !== control.value) {
         return { notMatching: true };
       }
@@ -268,8 +289,8 @@ console.log('FormData:', formData);
   }
 
   passwordsMatchValidator(group: FormGroup) {
-    const password = group.get('newPassword')!.value;
-    const confirmPassword = group.get('confirmPassword')!.value;
+    const password = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
   }
 

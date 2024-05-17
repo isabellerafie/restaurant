@@ -1,5 +1,4 @@
 <!-- signup-login.component.html -->
-
 <body>
     <div class="container">
         <div class="signup-form" *ngIf="isSignUpVisible && !isForgotPasswordVisible" id="signUp">
@@ -16,8 +15,7 @@
                         <label for="organization">As Organization</label>
                     </div>
                 </div>
-                <div *ngIf="!(isRestaurantSelected || isOrganizationSelected)"
-                        class="error-message">
+                <div *ngIf="!(isRestaurantSelected || isOrganizationSelected)" class="error-message">
                         Please select an account type
                     </div>
                     <!-- Name  -->
@@ -34,8 +32,7 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" formControlName="email" required pattern="^.+@.+\..+$">
                 </div>
-                <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
-                        class="error-message">
+                <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched" class="error-message">
                         Please enter a valid email address.
                     </div>
                 <!-- Country  -->
@@ -43,9 +40,8 @@
                     <label for="country">Country:</label>
                     <select id="country" name="country" formControlName="country" required>
                         <option value="" disabled selected>Select your country</option>
-                        <option *ngFor="let country of countries" [value]="country.phoneCode">
-                            {{ country.name }}
-                        </option>
+                        <option *ngFor="let country of countries" [value]="country.name">
+                            {{ country.name }} </option>
                     </select>
                 </div>
                 <div *ngIf="signUpForm.get('country')?.invalid && signUpForm.get('country')?.touched"
@@ -87,8 +83,7 @@
                             <option value="" disabled selected>Select your phone code</option>
                             <option *ngFor="let country of countries" [value]="country.phoneCode">
                                 <img [src]="country.flag" alt="{{ country.name }} flag" width="20" height="15">
-                                {{ country.name }} (+{{ country.phoneCode }})
-                              </option>
+                                {{ country.name }} (+{{ country.phoneCode }})</option>
                         </select>
                         <input type="tel" id="phone" name="phone" formControlName="phone"
                             [required]="!(isRestaurantSelected || isOrganizationSelected)">
@@ -99,15 +94,10 @@
                     Phone number must contain only numbers.
                 </div>
                 <!-- Password -->
-<div class="form-group">
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" formControlName="password"
-        [required]="!(isRestaurantSelected || isOrganizationSelected)"
-        [pattern]="!(isRestaurantSelected || isOrganizationSelected) ? '^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$' : ''"
-        (blur)="signUpForm.get('password').markAsTouched()"
-        (ngModelChange)="signUpForm.get('password').setValue($event)"
-    >
-</div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" formControlName="password">
+                  </div>
 <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched && signUpForm.get('password')?.dirty && !signUpForm.get('password')?.value"
     class="error-message">
     Please enter your password.
@@ -120,11 +110,7 @@
 <!-- Confirm Password -->
 <div class="form-group">
     <label for="confirm-password">Confirm Password:</label>
-    <input type="password" id="confirm-password" name="confirm-password" formControlName="confirmPassword"
-        required
-        (blur)="signUpForm.get('confirmPassword').markAsTouched()"
-        (ngModelChange)="signUpForm.get('confirmPassword').setValue($event)"
-    >
+    <input type="password" id="confirm-password" name="confirm-password" formControlName="confirmPassword">
 </div>
 <div *ngIf="signUpForm.get('confirmPassword')?.invalid && signUpForm.get('confirmPassword')?.touched && signUpForm.get('confirmPassword')?.dirty && signUpForm.get('confirmPassword')?.value !== signUpForm.get('password')?.value"
     class="error-message">
@@ -134,7 +120,6 @@
     class="error-message">
     Please confirm your password.
 </div>
-
 
                 <!-- Upload License -->
                 <div class="form-group">
@@ -148,7 +133,6 @@
                         License file is required.
                     </div>
                 </div>
-
                 <!-- Upload Logo -->
                 <div class="form-group">
                     <label for="logo_path">Upload Logo:</label>
@@ -174,15 +158,16 @@
                 <div class="form-group">
                     <label for="user_name">Username:</label>
                     <input type="text" id="user_name" name="user_name" formControlName="user_name" required>
+                </div>
                     <div *ngIf="loginForm.get('user_name')?.invalid && loginForm.get('user_name')?.touched"
                         class="error-message">
                         Please enter your username.
                     </div>
-                </div>
+                
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" formControlName="password" required
-                        pattern="^(?=.\d)(?=.[a-zA-Z]).{8,}$">
+                     <input type="password" id="password" name="password" formControlName="password">  <!--required
+                        pattern="^(?=.\d)(?=.[a-zA-Z]).{8,}$"> -->
                 </div>
                 <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
                 class="error-message">
@@ -204,34 +189,16 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" formControlName="email"
                         placeholder="Enter your email" />
+                    </div>
                     <div *ngIf="forgotPasswordForm.get('email')?.touched && forgotPasswordForm.get('email')?.invalid">
                         <small class="error-message" *ngIf="forgotPasswordForm.get('email')?.errors?.['required']">Email
                             is required</small>
                         <small class="error-message"
                             *ngIf="forgotPasswordForm.get('email')?.errors?.['pattern']">Invalid email format</small>
-                    </div>
+                    
                 </div>
                 <button type="submit">Reset Password</button>
                 <br><br><p><a href="javascript:void(0);" (click)="showLoginForm()">Back to login</a></p>
-            </form>
-        </div>
-
-        <!-- New Password Reset Form -->
-        <div class="reset-password-form" *ngIf="isResetPasswordVisible" id="resetPassword">
-            <h2>Set New Password</h2>
-            <form [formGroup]="resetPasswordForm" (ngSubmit)="submitResetPasswordForm()">
-                <div class="form-group">
-                    <label for="new-password">New Password:</label>
-                    <input type="password" id="new-password" formControlName="newPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" formControlName="confirmPassword" required>
-                    <div *ngIf="resetPasswordForm.errors?.['passwordMismatch']">
-                        <small class="error-message">Passwords must match</small>
-                    </div>
-                </div>
-                <button type="submit">Reset Password</button>
             </form>
         </div>
         <div id="overlay" [style.left]="overlayLeft"></div>

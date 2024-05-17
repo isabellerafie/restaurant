@@ -18,6 +18,7 @@ import { SignupLoginComponent } from './signup-login/signup-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CountryServiceService } from './service/country-service.service';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CountryServiceService } from './service/country-service.service';
     AddLeftoverComponent,
     ProfileComponent,
     SignupLoginComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
